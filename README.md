@@ -1,8 +1,34 @@
+<div align="center">
+
 # Thoth MCP
 
-A security-first, **read-only** MCP (Model Context Protocol) server that lets AI assistants safely query pre-configured MySQL, PostgreSQL, and Redis datasources.
+A security-first, **read-only** MCP server for AI assistants to safely query MySQL, PostgreSQL, and Redis.
+
+[![CI](https://github.com/pennxiv/thoth-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/pennxiv/thoth-mcp/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![MCP](https://img.shields.io/badge/MCP-compatible-purple.svg)](https://modelcontextprotocol.io)
+
+**[English](README.md)** · [简体中文](README.zh-CN.md)
+
+</div>
+
+---
 
 Every query passes through a layered safety pipeline before it ever reaches your database — so you can give an AI assistant data-access capabilities without handing it a loaded gun.
+
+## Table of Contents
+
+- [Why use this?](#why-use-this)
+- [Features](#features)
+- [Quick Start](#quick-start)
+- [Configuration](#configuration)
+- [MCP Tools](#mcp-tools)
+- [Security](#security)
+- [Transports](#transports)
+- [Architecture](#architecture)
+- [Development](#development)
+- [License](#license)
 
 ## Why use this?
 
@@ -60,6 +86,7 @@ docker compose up -d --build
 ### Connect your MCP client
 
 **Claude Code** (`~/.claude.json` or project `.mcp.json`):
+
 ```json
 {
   "mcpServers": {
@@ -72,6 +99,7 @@ docker compose up -d --build
 ```
 
 **Cursor / Windsurf** (`.cursor/mcp.json`):
+
 ```json
 {
   "mcpServers": {
