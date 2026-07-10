@@ -1,0 +1,28 @@
+mysql:
+  test_db:
+    host: mysql
+    port: 3306
+    user: thoth
+    password: thoth
+    database: thoth
+    min_pool_size: 1
+    max_pool_size: 5
+
+redis:
+  cache:
+    host: redis
+    port: 6379
+    db: 0
+    min_pool_size: 1
+    max_pool_size: 5
+
+postgres:
+  test_db:
+    host: postgres
+    port: 5432
+    user: thoth
+    password: thoth
+    database: thoth
+    schema: public
+    min_pool_size: 1
+    max_pool_size: 5

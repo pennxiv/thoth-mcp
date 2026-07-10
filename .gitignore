@@ -1,0 +1,34 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+.coverage.*
+
+# Environment / secrets
+.env
+.env.local
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Local datasources (keep example + docker configs, ignore local overrides)
+config/datasources.*.yaml
+!config/datasources.yaml
+!config/datasources.docker.yaml
+
+# Manual test script
+test_mcp.py

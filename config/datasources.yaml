@@ -1,0 +1,18 @@
+# Non-sensitive configuration; secrets come from environment variables
+# Environment variable pattern: THOTH_{TYPE}__{NAME}__{FIELD}
+# Example: THOTH_MYSQL__PROD_DB__PASSWORD
+
+mysql:
+  prod_db:
+    host: db.example.com
+    port: 3306
+    user: readonly_user
+    password: placeholder_override_via_env  # Override via THOTH_MYSQL__PROD_DB__PASSWORD
+    database: production
+
+redis:
+  session_cache:
+    host: redis.example.com
+    port: 6379
+    db: 0
+    # password: optional, set via THOTH_REDIS__SESSION_CACHE__PASSWORD
