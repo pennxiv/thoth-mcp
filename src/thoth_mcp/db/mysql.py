@@ -1,6 +1,6 @@
 """MySQL connection pool manager with per-datasource independent pools."""
 import aiomysql
-from thoth_mcp.config import DatasourcesConfig, MySQLDatasourceConfig
+from thoth_mcp.config import DatasourcesConfig
 from thoth_mcp.utils.logger import logger
 
 

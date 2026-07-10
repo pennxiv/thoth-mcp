@@ -394,11 +394,9 @@ def test_load_config_masks_passwords():
 
 def test_load_config_file_not_found():
     """Test 4: load_config() with missing YAML file raises SystemExit(1)."""
-    import os
     import sys
     from io import StringIO
     from pathlib import Path
-    from unittest.mock import patch
     from thoth_mcp.config import load_config
     from thoth_mcp.utils.logger import logger
 

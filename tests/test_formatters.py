@@ -1,5 +1,4 @@
 """Tests for result formatters."""
-import pytest
 from thoth_mcp.utils.formatters import format_mysql_result, format_redis_result
 
 

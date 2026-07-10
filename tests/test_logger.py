@@ -1,7 +1,6 @@
 import sys
 import os
 from io import StringIO
-import pytest
 from thoth_mcp.utils.logger import logger
 
 
@@ -111,7 +110,6 @@ def test_colorize_env_var():
         if "thoth_mcp.utils" in sys.modules:
             del sys.modules["thoth_mcp.utils"]
 
-        from thoth_mcp.utils.logger import logger as test_logger
 
         # If we got here without error, the env var is handled
         assert True

@@ -1,7 +1,6 @@
 """Pydantic models for datasource configuration."""
 
 import os
-import sys
 from pathlib import Path
 from pydantic import BaseModel, Field, ValidationError
 from pydantic_settings import (

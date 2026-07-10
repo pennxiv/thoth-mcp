@@ -1,5 +1,4 @@
 """Tests for server assembly."""
-from contextlib import asynccontextmanager
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest

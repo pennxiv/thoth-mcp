@@ -5,9 +5,9 @@ import redis.asyncio as redis
 from redis.asyncio import ConnectionPool
 from redis.exceptions import RedisError
 
-from thoth_mcp.config import DatasourcesConfig, RedisDatasourceConfig
+from thoth_mcp.config import DatasourcesConfig
 from thoth_mcp.utils.logger import logger
-from thoth_mcp.utils.redis_safety import validate_command, RedisSafetyError
+from thoth_mcp.utils.redis_safety import validate_command
 
 
 class RedisPoolManager:

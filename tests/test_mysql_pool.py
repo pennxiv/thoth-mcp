@@ -1,7 +1,6 @@
 """Tests for MySQL connection pool manager."""
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
-from pathlib import Path
 
 
 class TestMySQLPoolManagerLifecycle:

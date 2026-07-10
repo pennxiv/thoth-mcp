@@ -39,7 +39,7 @@ class TestRedisPoolManagerLifecycle:
         mock_client.aclose = AsyncMock()
 
         with patch("thoth_mcp.db.redis.ConnectionPool", return_value=mock_pool) as mock_pool_cls, \
-             patch("thoth_mcp.db.redis.redis.Redis", return_value=mock_client) as mock_redis_cls:
+             patch("thoth_mcp.db.redis.redis.Redis", return_value=mock_client):
             manager = RedisPoolManager(config)
             result = await manager.__aenter__()
 
