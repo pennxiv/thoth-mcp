@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-COPY pyproject.toml /app/
+COPY pyproject.toml README.md LICENSE /app/
 COPY src /app/src
 COPY config /app/config
 

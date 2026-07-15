@@ -110,6 +110,8 @@ def test_colorize_env_var():
         if "thoth_mcp.utils" in sys.modules:
             del sys.modules["thoth_mcp.utils"]
 
+        # Re-import to verify the module loads correctly with the env var
+        from thoth_mcp.utils.logger import logger as _test_logger  # noqa: F401
 
         # If we got here without error, the env var is handled
         assert True

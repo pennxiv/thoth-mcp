@@ -394,45 +394,33 @@ def test_load_config_masks_passwords():
 
 def test_load_config_file_not_found():
     """Test 4: load_config() with missing YAML file raises SystemExit(1)."""
+    import os
     import sys
     from io import StringIO
-    from pathlib import Path
     from thoth_mcp.config import load_config
     from thoth_mcp.utils.logger import logger
 
-    # Mock the yaml path to point to a non-existent file
-    original_path = Path(__file__).parent.parent / "config" / "datasources.yaml"
+    # Point to a non-existent config file via env var (safe, no file renaming)
+    os.environ["THOTH_DATASOURCES_FILE"] = "/nonexistent/path/datasources.yaml"
 
-    # Temporarily rename the config file
-    if original_path.exists():
-        temp_path = original_path.with_suffix(".yaml.bak")
-        original_path.rename(temp_path)
+    try:
+        # Capture stderr
+        old_stderr = sys.stderr
+        sys.stderr = StringIO()
 
-        try:
-            # Capture stderr
-            old_stderr = sys.stderr
-            sys.stderr = StringIO()
+        # Reconfigure logger to use captured stderr
+        logger.remove()
+        logger.add(sys.stderr, format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name} | {message}")
 
-            # Reconfigure logger to use captured stderr
-            logger.remove()
-            logger.add(sys.stderr, format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name} | {message}")
-
-            with pytest.raises(SystemExit) as exc_info:
-                load_config()
-
-            stderr_output = sys.stderr.getvalue()
-            sys.stderr = old_stderr
-
-            assert exc_info.value.code == 1
-            assert "Configuration file not found" in stderr_output
-
-        finally:
-            sys.stderr = old_stderr
-            # Restore the config file
-            temp_path.rename(original_path)
-    else:
-        # If file doesn't exist, just test that it raises SystemExit
         with pytest.raises(SystemExit) as exc_info:
             load_config()
 
+        stderr_output = sys.stderr.getvalue()
+        sys.stderr = old_stderr
+
         assert exc_info.value.code == 1
+        assert "Configuration file not found" in stderr_output
+
+    finally:
+        sys.stderr = old_stderr
+        del os.environ["THOTH_DATASOURCES_FILE"]
