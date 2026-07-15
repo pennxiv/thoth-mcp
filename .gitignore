@@ -32,3 +32,6 @@ config/datasources.*.yaml
 
 # Manual test script
 test_mcp.py
+
+# Ensure project scripts/ is tracked (overrides global gitignore)
+!scripts/
