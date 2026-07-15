@@ -32,25 +32,18 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest tests/ -v --tb=long 2>&1 | tee /tmp/pytest_${{ matrix.python-version }}.log
-          exit ${PIPESTATUS[0]}
-        continue-on-error: true
-
-      - name: Display test output on failure
-        if: always()
-        run: |
-          echo "## Test output (Python ${{ matrix.python-version }})" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          cat /tmp/pytest_${{ matrix.python-version }}.log >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-
-      - name: Check test result
-        run: |
-          if grep -q "failed" /tmp/pytest_${{ matrix.python-version }}.log; then
-            echo "Tests failed"
-            exit 1
+          set +e
+          pytest tests/ -v --tb=long 2>&1 | tee /tmp/pytest.log
+          EXIT_CODE=${PIPESTATUS[0]}
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "::error::Test failures detected (Python ${{ matrix.python-version }}):"
+            grep -E "FAILED|ERRORS|ERROR |Error|assert|raise|SHORT TEST" /tmp/pytest.log | head -30 | while IFS= read -r line; do
+              echo "::error::$line"
+            done
+            echo "=== FULL OUTPUT (last 80 lines) ===" >&2
+            tail -80 /tmp/pytest.log >&2
           fi
-          echo "All tests passed"
+          exit $EXIT_CODE
 
   docker-build:
     runs-on: ubuntu-latest
