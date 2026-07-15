@@ -31,7 +31,26 @@ jobs:
         run: ruff check src/ tests/
 
       - name: Run tests
-        run: pytest tests/ -v
+        run: |
+          pytest tests/ -v --tb=long 2>&1 | tee /tmp/pytest_${{ matrix.python-version }}.log
+          exit ${PIPESTATUS[0]}
+        continue-on-error: true
+
+      - name: Display test output on failure
+        if: always()
+        run: |
+          echo "## Test output (Python ${{ matrix.python-version }})" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat /tmp/pytest_${{ matrix.python-version }}.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Check test result
+        run: |
+          if grep -q "failed" /tmp/pytest_${{ matrix.python-version }}.log; then
+            echo "Tests failed"
+            exit 1
+          fi
+          echo "All tests passed"
 
   docker-build:
     runs-on: ubuntu-latest
